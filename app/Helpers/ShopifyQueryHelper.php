@@ -153,7 +153,7 @@ Class ShopifyQueryHelper
     {
       return <<<'GRAPHQL'
             {
-              orders(first: 1, sortKey: CREATED_AT, reverse: true) {
+              orders(first: 60, sortKey: CREATED_AT, reverse: true) {
                 edges {
                   node {
                     id

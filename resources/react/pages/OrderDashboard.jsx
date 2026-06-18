@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import OrderTableSkeleton from "../components/OrderTableSkeleton";
+import ErrorBanner from "../components/ErrorBanner";
 import {
   Page,
   Card,
@@ -25,13 +27,13 @@ function OrderDashboard() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/orders",{
+      const response = await fetch("/api/orders", {
         method: "GET",
         headers: {
           Accept: "application/json",
         },
       });
-      
+
       const data = await response.json();
       console.log("ORDER RESPONSE FROM BACKEND:", data);
 
@@ -47,9 +49,9 @@ function OrderDashboard() {
       setError(err.message || "Failed to load orders. Please try again later.");
       shopify.toast.show(err.message || "Failed to load orders",
         {
-          isError:true,
+          isError: true,
         }
-    );
+      );
     } finally {
       setLoading(false);
     }
@@ -82,30 +84,49 @@ function OrderDashboard() {
   };
 
   // Error State
-  if (error) {
-    return (
-      <Page title="Order Dashboard">
-        <Banner tone="critical">
-          <p>{error}</p>
-        </Banner>
-      </Page>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <Page title="Order Dashboard">
+  //       <Banner tone="critical">
+  //         <p>{error}</p>
+  //       </Banner>
+  //     </Page>
+  //   );
+  // }
+  <Page title="Order Dashboard">
+
+    {error && (
+      <ErrorBanner
+        message={error}
+        onDismiss={() => setError("")}
+      />
+    )}
+
+    {/* Rest of your page */}
+
+  </Page>
 
   // Loading State
+  // if (loading) {
+  //   return (
+  //     <Page title="Order Dashboard">
+  //       <Card>
+  //         <Box padding="600">
+  //           <div style={{ textAlign: "center" }}>
+  //             <Spinner
+  //               accessibilityLabel="Loading orders"
+  //               size="large"
+  //             />
+  //           </div>
+  //         </Box>
+  //       </Card>
+  //     </Page>
+  //   );
+  // }
   if (loading) {
     return (
       <Page title="Order Dashboard">
-        <Card>
-          <Box padding="600">
-            <div style={{ textAlign: "center" }}>
-              <Spinner
-                accessibilityLabel="Loading orders"
-                size="large"
-              />
-            </div>
-          </Box>
-        </Card>
+        <OrderTableSkeleton />
       </Page>
     );
   }
@@ -147,8 +168,7 @@ function OrderDashboard() {
         >
           {orders.map(({ node }, index) => {
             const customerName = node.customer
-              ? `${node.customer.firstName || ""} ${
-                  node.customer.lastName || ""
+              ? `${node.customer.firstName || ""} ${node.customer.lastName || ""
                 }`.trim()
               : "Guest";
 
@@ -160,7 +180,7 @@ function OrderDashboard() {
 
             return (
               <IndexTable.Row id={node.id} key={node.id} position={index}>
-                
+
                 <IndexTable.Cell>
                   <Text variant="bodyMd" fontWeight="semibold">
                     {node.name}
