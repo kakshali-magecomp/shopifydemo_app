@@ -5,6 +5,7 @@ import ListPage from "./pages/list";
 import EditPage from "./pages/edit";
 import CreatePage from "./pages/create";
 import OrderDashboard from "./pages/OrderDashboard";
+import PolarisShowcase from "./pages/PolarisShowcase"
 import { IndexTable } from "@shopify/polaris";
 
 	const AppRoute = () => {
@@ -14,6 +15,7 @@ import { IndexTable } from "@shopify/polaris";
             <Route path="/edit" element={<EditPage />} />
 			<Route path="/create" element={<CreatePage />} />
 			<Route path="/OrderDashboard" element={<OrderDashboard />} />
+			<Route path="/polaris-showcase" element={<PolarisShowcase />} />
 
         </Routes>
 	    );

@@ -20,6 +20,7 @@ import { NavMenu } from '@shopify/app-bridge-react';
 		            <a href="/">List</a>
 					<a href="/create">create</a>
 					<a href="/OrderDashboard">OrderDashboard</a>
+					<a href="/polaris-showcase">PolarisShowcase</a>
 		        </NavMenu>
 		        <AppRoute />
 		    </Router>
