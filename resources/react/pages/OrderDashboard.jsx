@@ -93,18 +93,7 @@ function OrderDashboard() {
   //     </Page>
   //   );
   // }
-  <Page title="Order Dashboard">
 
-    {error && (
-      <ErrorBanner
-        message={error}
-        onDismiss={() => setError("")}
-      />
-    )}
-
-    {/* Rest of your page */}
-
-  </Page>
 
   // Loading State
   // if (loading) {
@@ -135,6 +124,7 @@ function OrderDashboard() {
   if (!orders.length) {
     return (
       <Page title="Order Dashboard">
+        
         <Card>
           <EmptyState
             heading="No orders found"
@@ -149,6 +139,12 @@ function OrderDashboard() {
 
   return (
     <Page title="Order Dashboard">
+      {error && (
+          <ErrorBanner
+            message={error}
+            onDismiss={() => setError("")}
+          />
+        )}
       <Card>
         <IndexTable
           resourceName={{
