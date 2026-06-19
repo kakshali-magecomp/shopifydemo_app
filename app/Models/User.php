@@ -48,13 +48,13 @@ class User extends Authenticatable implements IShopModel
             // 'password' => 'hashed',
         ];
     }
-    public function getdata()
-    {
-        $shop = Auth::user();
-        $response = $shop->api()->graph($query);
-        if(isset($body['data']['theme']['nodes']['edges'][0]['id'])){
-            return $body['data']['theme']['nodes']['edges'][0]['id'];
-        }
-        return null;
-    }
+    // public function getdata()
+    // {
+    //     $shop = Auth::user();
+    //     $response = $shop->api()->graph($query);
+    //     if(isset($body['data']['theme']['nodes']['edges'][0]['id'])){
+    //         return $body['data']['theme']['nodes']['edges'][0]['id'];
+    //     }
+    //     return null;
+    // }
 }
