@@ -22,5 +22,6 @@ Route::middleware(['verify.shopify'])->group(function () {
     // Delete Product
     Route::delete('/products/delete', [ProductController::class, 'delete']);
 
+    //List Orders
     Route::get('/orders', [OrderController::class, 'list']);
 });
