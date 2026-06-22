@@ -6,7 +6,7 @@ import {
   Box,
 } from "@shopify/polaris";
 
-function OrderTableSkeleton() {
+export default function OrderTableSkeleton() {
   return (
     <Card>
       <Box padding="400">
@@ -24,4 +24,3 @@ function OrderTableSkeleton() {
   );
 }
 
-export default OrderTableSkeleton;

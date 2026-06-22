@@ -10,7 +10,7 @@ import {
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 
-function CreatePage() {
+export default function CreatePage() {
   const navigate = useNavigate();
   const shopify = useAppBridge(); // Get the App Bridge instance to control UI elements
 
@@ -281,4 +281,3 @@ function CreatePage() {
   );
 }
 
-export default CreatePage;

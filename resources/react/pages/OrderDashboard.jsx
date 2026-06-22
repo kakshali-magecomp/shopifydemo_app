@@ -13,7 +13,7 @@ import {
   Box,
 } from "@shopify/polaris";
 
-function OrderDashboard() {
+export default function OrderDashboard() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -230,4 +230,3 @@ function OrderDashboard() {
   );
 }
 
-export default OrderDashboard;

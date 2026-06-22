@@ -17,7 +17,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-function EditPage() {
+export default function EditPage() {
   const navigate = useNavigate();
   const shopify = useAppBridge();
   const [isDirty, setIsDirty] = useState(false);
@@ -431,4 +431,3 @@ function EditPage() {
   );
 }
 
-export default EditPage;

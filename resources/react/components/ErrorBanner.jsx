@@ -1,6 +1,6 @@
 import { Banner } from "@shopify/polaris";
 
-function ErrorBanner({ message, onDismiss }) {
+export default function ErrorBanner({ message, onDismiss }) {
   return (
     <Banner
       title="Unable to load orders"
@@ -12,4 +12,3 @@ function ErrorBanner({ message, onDismiss }) {
   );
 }
 
-export default ErrorBanner;

@@ -1,6 +1,5 @@
 import { Page, BlockStack } from "@shopify/polaris";
 import React from 'react';
-
 import ButtonSection from "../components/PolarisShowcase/ButtonSection";
 import FormSection from "../components/PolarisShowcase/FormSection";
 import CardSection from "../components/PolarisShowcase/CardSection";
@@ -19,7 +18,7 @@ function PolarisShowcase() {
         <ButtonSection />
 
         <AutocompleteSection />
-        
+
         <FormSection />
 
         <CardSection />
@@ -37,8 +36,6 @@ function PolarisShowcase() {
         <Colorpicker />
 
       </BlockStack>
-
-      
 
     </Page>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Text } from "@shopify/polaris";
 
-function DeleteConfirmationModal({
+ export default function DeleteConfirmationModal({
   open,
   onClose,
   onConfirm,
@@ -40,4 +40,3 @@ function DeleteConfirmationModal({
   );
 }
 
-export default DeleteConfirmationModal;

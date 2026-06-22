@@ -17,7 +17,7 @@ import {
 import { ImageIcon } from "@shopify/polaris-icons";
 import { useNavigate } from "react-router-dom";
 
-function ListPage() {
+export default function ListPage() {
   const navigate = useNavigate();
   const shopify = useAppBridge();
 
@@ -345,4 +345,3 @@ function ListPage() {
   );
 }
 
-export default ListPage;
