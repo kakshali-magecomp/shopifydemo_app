@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppBridge } from "@shopify/app-bridge-react";
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import {
   Page,
   Card,
@@ -18,13 +19,22 @@ import { useNavigate } from "react-router-dom";
 
 function ListPage() {
   const navigate = useNavigate();
+  const shopify = useAppBridge();
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  
+  //to open modal
+  const openDeleteModal = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
+
   // FETCH PRODUCTS
   const fetchProducts = async () => {
     try {
@@ -50,31 +60,31 @@ function ListPage() {
       const backendProducts = json?.products ?? [];
 
       const formattedProducts = backendProducts.map((p) => {
-      const images = [];
+        const images = [];
 
-  if (p.featuredImage?.url) {
-    images.push(p.featuredImage.url);
-  }
+        if (p.featuredImage?.url) {
+          images.push(p.featuredImage.url);
+        }
 
-  if (Array.isArray(p.media)) {
-    p.media.forEach((item) => {
-      if (
-        item?.status === "READY" &&
-        item?.image?.url &&
-        !images.includes(item.image.url)
-      ) {
-        images.push(item.image.url);
-      }
-    });
-  }
+        if (Array.isArray(p.media)) {
+          p.media.forEach((item) => {
+            if (
+              item?.status === "READY" &&
+              item?.image?.url &&
+              !images.includes(item.image.url)
+            ) {
+              images.push(item.image.url);
+            }
+          });
+        }
 
-  return {
-    id: p.id,
-    title: p.title || "Untitled Product",
-    status: p.status || "ACTIVE",
-    images,
-  };
-});
+        return {
+          id: p.id,
+          title: p.title || "Untitled Product",
+          status: p.status || "ACTIVE",
+          images,
+        };
+      });
 
       setProducts(formattedProducts);
     } catch (err) {
@@ -82,7 +92,7 @@ function ListPage() {
       setError(err.message || "Failed to load products");
       shopify.toast.show(err.message || "Failed to load Product",
         {
-          isError:true,
+          isError: true,
         }
       );
     } compression: {
@@ -95,15 +105,13 @@ function ListPage() {
     fetchProducts();
   }, []);
 
-  
-  // DELETE PRODUCT
-  const deleteProduct = async (id) => {
-    try {
-      console.log("DELETE PRODUCT:", id);
-      const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-      if (!confirmDelete) return;
 
-      setDeletingId(id);
+  // DELETE PRODUCT
+  const deleteProduct = async () => {
+    if (!selectedProduct) return;
+
+    try {
+      setDeletingId(selectedProduct.id);
 
       const response = await fetch("/api/products/delete", {
         method: "DELETE",
@@ -112,29 +120,37 @@ function ListPage() {
           Accept: "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({
+          id: selectedProduct.id,
+        }),
       });
 
       const json = await response.json();
+
       if (!json.status) {
         throw new Error(json.error || "Delete failed");
       }
 
-      setProducts((prev) => prev.filter((product) => product.id !== id));
-      shopify.toast.show("Product Delete Successfully");
-    } catch (err) {
-      console.error("DELETE ERROR:", err);
-      shopify.toast.show(err.message || "Delete failed",
-        {
-          isError: true,
-        }
+      setProducts((prev) =>
+        prev.filter((item) => item.id !== selectedProduct.id)
       );
+
+      shopify.toast.show("Product deleted successfully");
+
+      setModalOpen(false);
+      setSelectedProduct(null);
+    } catch (err) {
+      console.error(err);
+
+      shopify.toast.show(err.message || "Delete failed", {
+        isError: true,
+      });
     } finally {
       setDeletingId(null);
     }
   };
 
-  
+
   // EDIT PRODUCT
   const editProduct = (id) => {
     navigate(`/edit?id=${encodeURIComponent(id)}`);
@@ -154,11 +170,11 @@ function ListPage() {
     }
   };
 
-  
+
   // EMPTY STATE
   if (!loading && products.length === 0) {
     return (
-      <Page 
+      <Page
         title="Products"
         primaryAction={{
           content: "Create Product",
@@ -181,7 +197,7 @@ function ListPage() {
     );
   }
 
-  
+
   // TABLE ROWS
   const rowMarkup = products.map((product, index) => (
     <IndexTable.Row
@@ -194,46 +210,46 @@ function ListPage() {
           {product.id?.split("/").pop()}
         </Text>
       </IndexTable.Cell>
-      
-      <IndexTable.Cell>
-  {product.images?.length > 0 ? (
-    <div
-      style={{
-        display: "flex",
-        gap: "6px",
-        flexWrap: "wrap",
-        maxWidth: "220px",
-      }}
-    >
-      {product.images.slice(0, 4).map((img, i) => (
-        <Thumbnail
-          key={i}
-          source={img}
-          alt={`${product.title}-${i}`}
-          size="small"
-        />
-      ))}
 
-      {product.images.length > 4 && (
-        <span
-          style={{
-            fontSize: "12px",
-            fontWeight: "bold",
-            alignSelf: "center",
-          }}
-        >
-          +{product.images.length - 4}
-        </span>
-      )}
-    </div>
-  ) : (
-    <Thumbnail
-      source={ImageIcon}
-      alt="No Image"
-      size="small"
-    />
-  )}
-</IndexTable.Cell>
+      <IndexTable.Cell>
+        {product.images?.length > 0 ? (
+          <div
+            style={{
+              display: "flex",
+              gap: "6px",
+              flexWrap: "wrap",
+              maxWidth: "220px",
+            }}
+          >
+            {product.images.slice(0, 4).map((img, i) => (
+              <Thumbnail
+                key={i}
+                source={img}
+                alt={`${product.title}-${i}`}
+                size="small"
+              />
+            ))}
+
+            {product.images.length > 4 && (
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  alignSelf: "center",
+                }}
+              >
+                +{product.images.length - 4}
+              </span>
+            )}
+          </div>
+        ) : (
+          <Thumbnail
+            source={ImageIcon}
+            alt="No Image"
+            size="small"
+          />
+        )}
+      </IndexTable.Cell>
 
       <IndexTable.Cell>
         <Text variant="bodyMd" fontWeight="bold" as="span">
@@ -257,7 +273,7 @@ function ListPage() {
             size="slim"
             tone="critical"
             loading={deletingId === product.id}
-            onClick={() => deleteProduct(product.id)}
+            onClick={() => openDeleteModal(product)}
           >
             Delete
           </Button>
@@ -304,7 +320,7 @@ function ListPage() {
             itemCount={products.length}
             selectable={false}
             headings={[
-              { title: "ID"},
+              { title: "ID" },
               { title: "Image" },
               { title: "Title" },
               { title: "Status" },
@@ -315,6 +331,16 @@ function ListPage() {
           </IndexTable>
         </Card>
       )}
+      <DeleteConfirmationModal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedProduct(null);
+        }}
+        onConfirm={deleteProduct}
+        loading={deletingId === selectedProduct?.id}
+        productTitle={selectedProduct?.title || ""}
+      />
     </Page>
   );
 }
