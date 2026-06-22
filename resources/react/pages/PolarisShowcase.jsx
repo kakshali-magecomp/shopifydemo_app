@@ -9,7 +9,7 @@ import EmptyStateSection from "../components/PolarisShowcase/EmptyStateSection";
 import ToastSection from "../components/PolarisShowcase/ToastSection";
 import BadgeSection from "../components/PolarisShowcase/BadgeSection";
 import Colorpicker from "../components/PolarisShowcase/Colorpicker";
-import AutocompleteSection from "../components/PolarisShowcase/Autocomplete";
+import AutocompleteSection from "../components/PolarisShowcase/AutocompleteSection";
 function PolarisShowcase() {
   return (
     <Page title="Polaris Component Showcase">
