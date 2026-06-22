@@ -4,7 +4,7 @@ client_id = "203c4ddd439a6ff3513de125a927afa8"
 
 name = "kakshalishop_demo"
 
-application_url = "https://beds-howto-brain-stay.trycloudflare.com/"
+application_url = "https://alfred-charity-jpg-feel.trycloudflare.com/"
 
 embedded = true
 
@@ -16,19 +16,19 @@ api_version = "2025-04"
  
   [[webhooks.subscriptions]]
 
-  uri = "https://beds-howto-brain-stay.trycloudflare.com/webhook/customers-data-request"
+  uri = "https://alfred-charity-jpg-feel.trycloudflare.com/webhook/customers-data-request"
 
   compliance_topics = [ "customers/data_request" ]
  
   [[webhooks.subscriptions]]
 
-  uri = "https://beds-howto-brain-stay.trycloudflare.com/webhook/customers-redact"
+  uri = "https://alfred-charity-jpg-feel.trycloudflare.com/webhook/customers-redact"
 
   compliance_topics = [ "customers/redact" ]
  
   [[webhooks.subscriptions]]
 
-  uri = "https://beds-howto-brain-stay.trycloudflare.com/webhook/shop-redact"
+  uri = "https://alfred-charity-jpg-feel.trycloudflare.com/webhook/shop-redact"
 
   compliance_topics = [ "shop/redact" ]
  
@@ -46,7 +46,7 @@ use_legacy_install_flow = false
 
 redirect_urls = [
 
-  "https://beds-howto-brain-stay.trycloudflare.com/authenticate"
+  "https://alfred-charity-jpg-feel.trycloudflare.com/authenticate"
 
 ]
  

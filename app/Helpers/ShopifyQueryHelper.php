@@ -1,11 +1,65 @@
 <?php
-
+// node - actual product data
+// edges - list wrapper
 namespace App\Helpers;
 
-Class ShopifyQueryHelper
+class ShopifyQueryHelper
 {
-    public static function productshow(){
-        return <<<'GRAPHQL'
+  public static function productcreate()
+  {
+    return <<<'GRAPHQL'
+        mutation productCreate($input: ProductInput!) {
+          productCreate(input: $input) {
+            product {
+              id
+              title
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }
+        GRAPHQL;
+  }
+  public static function productCreateMedia()
+  {
+    return <<<'GRAPHQL'
+            mutation productCreateMedia($media: [CreateMediaInput!]!, $productId: ID!) {
+              productCreateMedia(media: $media, productId: $productId) {
+                media {
+                  id
+                  status
+                }
+                mediaUserErrors {
+                  field
+                  message
+                }
+              }
+            }
+            GRAPHQL;
+  }
+  public static function productSetFeaturedMedia()
+  {
+    return <<<'GRAPHQL'
+    mutation productSetFeaturedMedia($productId: ID!, $mediaId: ID!) {
+                  productSetFeaturedMedia(productId: $productId, mediaId: $mediaId) {
+                    product {
+                      id
+                      featuredImage {
+                        url
+                      }
+                    }
+                    userErrors {
+                      message
+                    }
+                  }
+                }
+    GRAPHQL;
+  }
+  public static function productshow()
+  {
+    return <<<'GRAPHQL'
         query {
             products(first: 50) {
                 edges {
@@ -39,10 +93,10 @@ Class ShopifyQueryHelper
             }
         }
         GRAPHQL;
-    }
-    public static function productUpdate()
-    {
-        return <<<'GRAPHQL'
+  }
+  public static function productUpdate()
+  {
+    return <<<'GRAPHQL'
         mutation productUpdate($input: ProductInput!) {
           productUpdate(input: $input) {
             product {
@@ -56,10 +110,10 @@ Class ShopifyQueryHelper
           }
         }
         GRAPHQL;
-    }
-    public static function createMedia()
-    {
-        return <<<'GRAPHQL'
+  }
+  public static function createMedia()
+  {
+    return <<<'GRAPHQL'
             mutation productCreateMedia(
               $productId: ID!,
               $media: [CreateMediaInput!]!
@@ -79,10 +133,10 @@ Class ShopifyQueryHelper
               }
             }
             GRAPHQL;
-    }
-    public static function deleteMedia()
-    {
-        return <<<'GRAPHQL'
+  }
+  public static function deleteMedia()
+  {
+    return <<<'GRAPHQL'
             mutation productDeleteMedia(
                   $productId: ID!,
                   $mediaIds: [ID!]!
@@ -99,10 +153,10 @@ Class ShopifyQueryHelper
                   }
                 }
             GRAPHQL;
-    }
-    public static function deleteProduct()
-    {
-        return <<<'GRAPHQL'
+  }
+  public static function deleteProduct()
+  {
+    return <<<'GRAPHQL'
         mutation productDelete($input: ProductDeleteInput!) {
               productDelete(input: $input) {
                 deletedProductId
@@ -112,10 +166,10 @@ Class ShopifyQueryHelper
               }
             }
         GRAPHQL;
-    }
-    public static function showproduct()
-    {
-          return <<<'GRAPHQL'
+  }
+  public static function showproduct()
+  {
+    return <<<'GRAPHQL'
           query getProduct($id: ID!) {
           product(id: $id) {
             id
@@ -147,11 +201,11 @@ Class ShopifyQueryHelper
           }
         }
         GRAPHQL;
-    }
+  }
 
-    public static function showOrder()
-    {
-      return <<<'GRAPHQL'
+  public static function showOrder()
+  {
+    return <<<'GRAPHQL'
             {
               orders(first: 60, sortKey: CREATED_AT, reverse: true) {
                 edges {
@@ -178,5 +232,5 @@ Class ShopifyQueryHelper
               }
             }
             GRAPHQL;
-    }
+  }
 }
