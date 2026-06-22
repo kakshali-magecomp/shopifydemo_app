@@ -1,24 +1,78 @@
-import {Toast, Frame, Page, Button} from '@shopify/polaris';
 import { useState, useCallback } from 'react';
 import React from 'react';
- 
-function ToastSection()
-{
-    const[active,setActive] = useState(false);
-    const ToggleActive = useCallback(() => setActive((active) => !active),[]);
-    const toastMarkup = active ?(
-        <Tost content = "Message sent" onDismiss={ToggleActive} /> 
-    ):null;
+import {
+    Card,
+    Button,
+    Toast,
+    Frame,
+    Text,
+    BlockStack,
+    InlineStack,
+} from '@shopify/polaris';
 
-    return(
-        <div style={{height : '250px'}}>
+function ToastSection() {
+    const [successActive, setSuccessActive] = useState(false);
+    const [errorActive, setErrorActive] = useState(false);
+
+    const toggleSuccess = useCallback(
+        () => setSuccessActive((active) => !active),
+        []
+    );
+
+    const toggleError = useCallback(
+        () => setErrorActive((active) => !active),
+        []
+    );
+
+    const successToast = successActive ? (
+        <Toast
+            content='Operation complete successfully!'
+            onDismiss={toggleSuccess}
+        />
+    ) : null;
+
+    const errorToast = errorActive ? (
+        <Toast
+            content='Something wants wrong!'
+            errro
+            onDismiss={toggleError}
+        />
+    ) : null;
+
+    return (
+        <div style={{ height: "250px" }}>
             <Frame>
-                <Page title="Toast example">
-                    <Button onClick={ToggleActive}>Show Toast</Button>
-                </Page>
+                {successToast}
+                {errorToast}
+
+                <Card>
+                    <BlockStack gap='400'>
+                        <Text variant='headingMd' as='h2'>
+                            Toast Notifiation Section
+                        </Text>
+
+                        <InlineStack gap='300'>
+                            <Button
+                                variant='primary'
+                                onClick={toggleSuccess}
+                            >
+                                Show Success Toast
+                            </Button>
+
+                            <Button
+                                variant='critical'
+                                onClick={toggleError}
+                            >
+                                Show Error Toast
+                            </Button>
+
+                        </InlineStack>
+                    </BlockStack>
+                </Card>
             </Frame>
         </div>
-    );
+
+    )
 
 }
 export default ToastSection;
