@@ -2,7 +2,7 @@ import { Card , Text , BlockStack} from "@shopify/polaris";
 import React from 'react';
 
 
-function CardSection()
+export default function CardSection()
 {
     return(
         <Card>
@@ -17,4 +17,3 @@ function CardSection()
         </Card>
     )
 }
-export default CardSection;

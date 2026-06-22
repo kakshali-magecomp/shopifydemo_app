@@ -10,7 +10,7 @@ import {
   Banner,
 } from "@shopify/polaris";
 
-function ModalSection() {
+export default function ModalSection() {
   const [basicModalOpen, setBasicModalOpen] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -135,4 +135,3 @@ function ModalSection() {
   );
 }
 
-export default ModalSection;

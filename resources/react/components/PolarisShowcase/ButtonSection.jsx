@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import {
   Card,
+  ActionList,
   BlockStack,
   InlineStack,
   Button,
+  ButtonGroup,
+  Popover,
   Text,
 } from "@shopify/polaris";
+import { ChevronDownIcon } from '@shopify/polaris-icons'
 
-function ButtonSection() {
+export default function ButtonSection() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [active, setActive] = useState(null);
+
+  const toggleActive = (id = String) => () => {
+    setActive((activeId) => (activeId !== id ? id : null));
+  };
 
   const handleClick = (buttonType) => {
     setMessage(`${buttonType} button clicked`);
@@ -75,6 +84,30 @@ function ButtonSection() {
           <Button disabled>
             Disabled Button
           </Button>
+
+          <ButtonGroup variant="segmented">
+            <Button variant="primary">Save</Button>
+
+            <Popover
+              active={active === 'popover1'}
+              preferredAlignment="right"
+              activator={
+                <Button
+                  variant="primary"
+                  onClick={toggleActive('popover1')}
+                  icon={ChevronDownIcon}
+                  accessibilityLabel="Other save actions"
+                />
+              }
+              autofocusTarget="first-node"
+              onClose={toggleActive('popover1')}>
+              <ActionList
+                actionRole="menuitem"
+                items={[{ content: 'save as draft' }]}
+              />
+            </Popover>
+          </ButtonGroup>
+
         </InlineStack>
 
         {message && (
@@ -87,4 +120,3 @@ function ButtonSection() {
   );
 }
 
-export default ButtonSection;

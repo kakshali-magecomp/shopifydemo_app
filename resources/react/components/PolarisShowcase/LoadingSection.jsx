@@ -12,7 +12,7 @@ import {
     from '@shopify/polaris';
 import React, { useState } from 'react';
 
-function LoadingSection() {
+export default function LoadingSection() {
     const [loading, setLoading] = useState(false);
     return (
         <card>
@@ -32,10 +32,10 @@ function LoadingSection() {
                     <>
                         {/* sppiner */}
                         <Box padding='400'>
-                            <Spinner
-                                accessibilityLabel='Loading Content'
-                                size='large'
-                            />
+                            <s-spinner
+                                accessibilityLabel="Loading"
+                                size="large-100"
+                            ></s-spinner>
                         </Box>
                         {/* Skeleton Display Text */}
                         <SkeletonDisplayText size='medium' />
@@ -67,4 +67,3 @@ function LoadingSection() {
         </card>
     );
 }
-export default LoadingSection;

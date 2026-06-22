@@ -1,7 +1,7 @@
 import { Card, EmptyState, Text, BlockStack } from '@shopify/polaris';
 import React from 'react';
 
-function mptyStateSection() {
+export default function mptyStateSection() {
     return (
         <Card sectioned>
             <BlockStack gap="400">
@@ -28,4 +28,3 @@ function mptyStateSection() {
         </Card>
     );
 }
-export default mptyStateSection;

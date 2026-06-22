@@ -1,7 +1,7 @@
 import {Badge , Card , Text , BlockStack , InlineStack} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeSection()
+export default function BadgeSection()
 {
     return(
         <Card>
@@ -20,4 +20,3 @@ function BadgeSection()
         </Card>
     );
 }
-export default BadgeSection;

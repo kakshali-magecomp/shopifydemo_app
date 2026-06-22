@@ -10,7 +10,7 @@ import {
     InlineStack,
 } from '@shopify/polaris';
 
-function ToastSection() {
+export default function ToastSection() {
     const [successActive, setSuccessActive] = useState(false);
     const [errorActive, setErrorActive] = useState(false);
 
@@ -75,4 +75,3 @@ function ToastSection() {
     )
 
 }
-export default ToastSection;

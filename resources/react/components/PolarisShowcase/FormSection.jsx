@@ -13,7 +13,7 @@ import {
   BlockStack,
 } from "@shopify/polaris";
 
-function FormSection() {
+export default function FormSection() {
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -165,4 +165,3 @@ function FormSection() {
   );
 }
 
-export default FormSection;
